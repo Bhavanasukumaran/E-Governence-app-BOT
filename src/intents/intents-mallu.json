@@ -1,0 +1,149 @@
+{
+  "intents": [
+
+    {
+      "tag": "greeting",
+      "description": "Handles user greetings in Malayalam and Manglish.",
+      "patterns": [
+        "ഹായ്",
+        "ഹലോ",
+        "നമസ്കാരം",
+        "സുപ്രഭാതം",
+        "ശുഭസന്ധ്യ",
+        "hai",
+        "hello",
+        "namaskaram",
+        "suprabhatham",
+        "shubha sandhya"
+      ],
+      "response_type": "static",
+      "responses": [
+        "നമസ്കാരം! ഞാൻ എങ്ങനെ സഹായിക്കാം?",
+        "ഹലോ! എന്ത് സഹായം വേണം?",
+        "സ്വാഗതം! ഡിജിറ്റൽ സേവനങ്ങളിൽ ഞാൻ സഹായിക്കാം."
+      ]
+    },
+
+    {
+      "tag": "create_digital_identity",
+      "description": "Guides users in creating a new digital identity (DID).",
+      "patterns": [
+        "ഡിജിറ്റൽ ഐഡി എങ്ങനെ സൃഷ്ടിക്കും?",
+        "എന്റെ ഡിജിറ്റൽ ഐഡി ഉണ്ടാക്കണം",
+        "ഡിഐഡി എങ്ങനെ ലഭിക്കും?",
+        "digital id engane undakkam?",
+        "ente digital id create cheyyanam",
+        "did engane kittum?"
+      ],
+      "response_type": "static",
+      "responses": [
+        "ഇമെയിൽ ഉപയോഗിച്ച് രജിസ്റ്റർ ചെയ്ത് രേഖകൾ അപ്‌ലോഡ് ചെയ്യുക.",
+        "രേഖ പരിശോധന വിജയകരമായാൽ നിങ്ങളുടെ ഡിജിറ്റൽ ഐഡി സൃഷ്ടിക്കും.",
+        "ആപ്പ് വഴി സൈൻ അപ്പ് ചെയ്ത് പ്രക്രിയ ആരംഭിക്കുക."
+      ]
+    },
+
+    {
+      "tag": "required_documents",
+      "description": "Provides information about documents required for identity verification.",
+      "patterns": [
+        "എന്തെല്ലാം രേഖകൾ വേണം?",
+        "ഐഡി പ്രൂഫ് എന്തൊക്കെയാണ്?",
+        "verificationinu enthokke documents venam?",
+        "id proof list parayu",
+        "ethu documents upload cheyyanam?"
+      ],
+      "response_type": "static",
+      "responses": [
+        "ആധാർ, പാൻ, പാസ്‌പോർട്ട്, ഡ്രൈവിംഗ് ലൈസൻസ് എന്നിവ അപ്‌ലോഡ് ചെയ്യാം.",
+        "സർക്കാർ നൽകിയ സാധുവായ ഐഡി രേഖകൾ സ്വീകരിക്കും.",
+        "രേഖ വ്യക്തവും സാധുവുമായിരിക്കണം."
+      ]
+    },
+
+    {
+      "tag": "upload_document",
+      "description": "Explains how users can upload documents for verification.",
+      "patterns": [
+        "രേഖ എങ്ങനെ അപ്‌ലോഡ് ചെയ്യാം?",
+        "ഡോക്യുമെന്റ് ചേർക്കുക",
+        "upload document engane?",
+        "id proof submit cheyyanam",
+        "document upload cheyyan pattumo?"
+      ],
+      "response_type": "static",
+      "responses": [
+        "ഡാഷ്ബോർഡിലെ Documents വിഭാഗത്തിലേക്ക് പോകുക.",
+        "Upload ബട്ടൺ അമർത്തി രേഖ തിരഞ്ഞെടുക്കുക.",
+        "PDF, JPG അല്ലെങ്കിൽ PNG ഫോർമാറ്റ് ഉപയോഗിക്കുക."
+      ]
+    },
+
+    {
+      "tag": "register_complaint",
+      "description": "Initiates the complaint registration process.",
+      "patterns": [
+        "പരാതി നൽകണം",
+        "പരാതി രജിസ്റ്റർ ചെയ്യുക",
+        "grievance submit cheyyanam",
+        "complaint register cheyyanam",
+        "oru problem report cheyyanam"
+      ],
+      "response_type": "flow",
+      "responses": [
+        "ദയവായി ബന്ധപ്പെട്ട വകുപ്പിന്റെ പേര് തിരഞ്ഞെടുക്കുക.",
+        "പ്രശ്നത്തിന്റെ വിശദാംശങ്ങൾ നൽകുക.",
+        "ഞാൻ പരാതി രജിസ്റ്റർ ചെയ്യാൻ സഹായിക്കാം."
+      ]
+    },
+
+    {
+      "tag": "complaint_status",
+      "description": "Allows users to track the status of submitted complaints.",
+      "patterns": [
+        "പരാതിയുടെ നില പരിശോധിക്കുക",
+        "എന്റെ പരാതി ട്രാക്ക് ചെയ്യുക",
+        "complaint status entha?",
+        "ente complaint track cheyyanam",
+        "complaint resolve aayo?"
+      ],
+      "response_type": "dynamic",
+      "responses": [
+        "ദയവായി പരാതി ഐഡി നൽകുക.",
+        "റഫറൻസ് നമ്പർ നൽകാമോ?",
+        "പരാതിയുടെ പുരോഗതി പരിശോധിക്കുന്നു."
+      ]
+    },
+
+    {
+      "tag": "trust_score_query",
+      "description": "Explains AI-generated trust score and how it is calculated.",
+      "patterns": [
+        "ട്രസ്റ്റ് സ്കോർ എന്താണ്?",
+        "എന്റെ ട്രസ്റ്റ് സ്കോർ പറയൂ",
+        "trust score entha?",
+        "ente trust score parayu",
+        "score kurav enth kond?"
+      ],
+      "response_type": "static",
+      "responses": [
+        "നിങ്ങളുടെ ട്രസ്റ്റ് സ്കോർ രേഖകളുടെ വിശ്വാസ്യതയെ അടിസ്ഥാനമാക്കിയാണ്.",
+        "കൃത്യമായ രേഖകൾ അപ്‌ലോഡ് ചെയ്താൽ സ്കോർ മെച്ചപ്പെടും.",
+        "ഉയർന്ന സ്കോർ കൂടുതൽ വിശ്വാസ്യത സൂചിപ്പിക്കുന്നു."
+      ]
+    },
+
+    {
+      "tag": "fallback",
+      "description": "Handles unrecognized user input and requests clarification.",
+      "patterns": [],
+      "response_type": "fallback",
+      "responses": [
+        "ക്ഷമിക്കണം, ഞാൻ മനസ്സിലാക്കിയില്ല. ദയവായി വീണ്ടും പറയാമോ?",
+        "കൂടുതൽ വിശദീകരിക്കാമോ?",
+        "ദയവായി നിങ്ങളുടെ അഭ്യർത്ഥന വ്യക്തമാക്കുക."
+      ]
+    }
+
+  ]
+}
