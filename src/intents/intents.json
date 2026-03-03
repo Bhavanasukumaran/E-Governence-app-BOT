@@ -319,6 +319,342 @@
     },
 
     {
+        "tag": "verification_time_query",
+        "description": "Provides estimated time required for document verification.",
+        "patterns": [
+            "How long does verification take?",
+            "Verification time",
+            "When will my document be verified?",
+            "Time for document approval"
+        ],
+        "response_type": "static",
+        "responses": [
+            "Document verification usually takes 24 to 48 hours.",
+            "Most documents are verified within 2 working days.",
+            "Verification time depends on document clarity and validation checks."
+        ]
+    },
+
+    {
+        "tag": "complaint_priority_prediction",
+        "description": "Uses AI to analyze complaint text and predict priority level.",
+        "patterns": [],
+        "response_type": "ai_action",
+        "responses": [
+            "Based on your complaint details, this issue has been marked as High priority.",
+            "Your complaint has been categorized as Medium priority.",
+            "This complaint has been assigned Low priority."
+        ]
+    },
+
+    {
+        "tag": "fraud_detection_info",
+        "description": "Explains how the system detects fraudulent or manipulated documents using AI.",
+        "patterns": [
+            "How do you detect fake documents?",
+            "Fraud detection system",
+            "Is document fraud detected?",
+            "How do you check fake ID?",
+            "Can AI detect fake documents?"
+        ],
+        "response_type": "static",
+        "responses": [
+            "Our AI system analyzes document patterns, text consistency, and image integrity to detect possible fraud.",
+            "We use OCR validation and data cross-checking to identify fake or altered documents.",
+            "Suspicious or manipulated documents are automatically flagged for manual review."
+        ]
+    },
+
+    {
+        "tag": "complaint_fraud_detection",
+        "description": "Explains how the system detects spam or fraudulent complaints.",
+        "patterns": [
+            "How do you prevent fake complaints?",
+            "Fraud in complaints",
+            "Spam complaint detection",
+            "False complaint detection"
+        ],
+        "response_type": "static",
+        "responses": [
+            "Our AI analyzes complaint patterns to detect duplicate or suspicious submissions.",
+            "Repeated or abusive complaints are automatically flagged.",
+            "Suspicious complaints may undergo manual review before processing."
+        ]
+    },
+
+    {
+        "tag": "account_flagged_query",
+        "description": "Handles user queries when their account is flagged for suspicious activity.",
+        "patterns": [
+            "Why is my account restricted?",
+            "Account flagged",
+            "Suspicious activity warning",
+            "Why was my account blocked?"
+        ],
+        "response_type": "dynamic",
+        "responses": [
+            "Your account may have been flagged due to suspicious activity.",
+            "Please contact support for further verification.",
+            "Additional identity verification may be required."
+        ]
+    },
+
+    {
+        "tag": "view_profile",
+        "description": "Allows users to view their registered profile details.",
+        "patterns": [
+        "Show my profile",
+        "View my profile",
+        "My account details",
+        "Show my information",
+        "Display profile"
+        ],
+        "response_type": "dynamic",
+        "responses": [
+        "Fetching your profile details.",
+        "Here are your registered account details.",
+        "Retrieving your profile information now."
+        ]
+    },
+
+    {
+        "tag": "update_profile",
+        "description": "Allows users to update personal information such as phone number or address.",
+        "patterns": [
+        "Update my profile",
+        "Change my phone number",
+        "Edit my details",
+        "Modify account information",
+        "Update address"
+        ],
+        "response_type": "flow",
+        "responses": [
+        "Please specify which detail you would like to update.",
+        "You can update your contact information from profile settings.",
+        "Tell me what information needs to be changed."
+        ]
+    },
+
+    {
+        "tag": "main_menu",
+        "description": "Navigates the user back to the main dashboard or home screen.",
+        "patterns": [
+        "Main menu",
+        "Go to home",
+        "Show dashboard",
+        "Home screen",
+        "Back to main page"
+        ],
+        "response_type": "static",
+        "responses": [
+        "Returning to the main menu.",
+        "Here is your dashboard.",
+        "Navigating back to home screen."
+        ]
+    },
+
+    {
+        "tag": "repeat_response",
+        "description": "Repeats the last chatbot response when user requests clarification.",
+        "patterns": [
+        "Repeat that",
+        "Say that again",
+        "I didn't understand",
+        "Can you repeat?",
+        "Explain again"
+        ],
+        "response_type": "contextual",
+        "responses": [
+        "Sure, let me repeat that for you.",
+        "I'll explain that again.",
+        "Here is the information once more."
+        ]
+    },
+
+    {
+        "tag": "verification_in_progress",
+        "description": "Handles queries when document verification is still under review.",
+        "patterns": [
+        "Is my verification still pending?",
+        "Why is verification taking long?",
+        "Still under review?",
+        "Verification delay",
+        "Processing status"
+        ],
+        "response_type": "dynamic",
+        "responses": [
+        "Your document is currently under review.",
+        "Verification is in progress. Please allow some time.",
+        "We are processing your document. You will be notified once completed."
+        ]
+    },
+
+    {
+        "tag": "resubmit_document",
+        "description": "Allows users to resubmit documents after rejection or correction.",
+        "patterns": [
+        "Resubmit document",
+        "Upload again",
+        "Retry verification",
+        "Submit corrected document",
+        "Re-upload ID"
+        ],
+        "response_type": "flow",
+        "responses": [
+        "Please upload the corrected document for re-verification.",
+        "You can resubmit your document from the Documents section.",
+        "Make sure the new file is clear and valid before uploading."
+        ]
+    },
+
+    {
+        "tag": "estimated_resolution_time",
+        "description": "Provides estimated time for complaint resolution.",
+        "patterns": [
+        "How long does complaint take?",
+        "When will my complaint be resolved?",
+        "Resolution time",
+        "Expected completion date",
+        "Complaint processing time"
+        ],
+        "response_type": "static",
+        "responses": [
+        "Most complaints are resolved within 3 to 7 working days.",
+        "Resolution time depends on the department and issue complexity.",
+        "You will be notified once your complaint is resolved."
+        ]
+    },
+
+    {
+        "tag": "contact_support",
+        "description": "Provides support contact information for further assistance.",
+        "patterns": [
+        "Contact support",
+        "Customer care",
+        "Talk to officer",
+        "Need help from admin",
+        "Support contact"
+        ],
+        "response_type": "static",
+        "responses": [
+        "You can contact support through the Help section in the app.",
+        "Our support team is available via email and in-app chat.",
+        "Please visit the support page for further assistance."
+        ]
+    },
+
+    {
+        "tag": "feedback_submission",
+        "description": "Allows users to submit feedback about services or system performance.",
+        "patterns": [
+        "Give feedback",
+        "Submit feedback",
+        "Rate service",
+        "Provide suggestion",
+        "Share my experience"
+        ],
+        "response_type": "flow",
+        "responses": [
+        "We value your feedback. Please share your comments.",
+        "You can submit feedback from the Feedback section.",
+        "Thank you for helping us improve our services."
+        ]
+    },
+
+    {
+        "tag": "greeting_typo",
+        "description": "Handles common typo variations of greetings.",
+        "patterns": [
+            "Hii",
+            "Hiii",
+            "Helloo",
+            "Helo",
+            "Hye",
+            "Heyy",
+            "Gud morning",
+            "Gud evening"
+        ],
+        "response_type": "static",
+        "responses": [
+            "Hello! How can I assist you today?",
+            "Hi there! What can I help you with?",
+            "Greetings! How may I support you today?"
+        ]
+        },
+
+        {
+        "tag": "help_typo",
+        "description": "Handles typo variations of help-related queries.",
+        "patterns": [
+            "Halp",
+            "Hlp",
+            "Helpp",
+            "What u can do?",
+            "Wat can u do",
+            "Servises available"
+        ],
+        "response_type": "static",
+        "responses": [
+            "I can help you with digital identity creation, document verification, complaint registration, and tracking.",
+            "You can ask me about uploading documents, checking complaint status, or understanding your trust score."
+        ]
+        },
+
+        {
+        "tag": "complaint_typo",
+        "description": "Handles typo variations when users try to file a complaint.",
+        "patterns": [
+            "Complain",
+            "Complent",
+            "Complant",
+            "Regster complaint",
+            "File complain",
+            "Raise complint",
+            "Submit complant"
+        ],
+        "response_type": "flow",
+        "responses": [
+            "Sure. Please select the department related to your complaint.",
+            "I will assist you in filing a complaint. Which department is it about?"
+        ]
+        },
+
+        {
+        "tag": "verification_typo",
+        "description": "Handles typo variations related to document verification.",
+        "patterns": [
+            "Verfication",
+            "Verifcation",
+            "Documnt upload",
+            "Uplod document",
+            "Check verfication",
+            "Doc status"
+        ],
+        "response_type": "dynamic",
+        "responses": [
+            "Are you asking about document verification? Please provide your document reference ID.",
+            "I can help with document verification. What would you like to check?"
+        ]
+        },
+
+        {
+        "tag": "status_typo",
+        "description": "Handles typo variations when checking complaint status.",
+        "patterns": [
+            "Staus",
+            "Statuz",
+            "Track complnt",
+            "Check staus",
+            "Complant staus"
+        ],
+        "response_type": "dynamic",
+        "responses": [
+            "Please share your complaint ID.",
+            "Kindly provide your complaint reference number."
+        ]
+    },
+
+    {
       "tag": "fallback",
       "description": "Handles unrecognized inputs and asks the user to clarify their request.",
       "patterns": [],
@@ -329,6 +665,5 @@
         "Please clarify your request so I can assist you better."
       ]
     }
-
   ]
 }
