@@ -1,0 +1,334 @@
+{
+  "intents": [
+
+    {
+      "tag": "greeting",
+      "description": "Handles general greetings and initiates friendly conversation with the user.",
+      "patterns": [
+        "Hi",
+        "Hello",
+        "Hey",
+        "Good morning",
+        "Good evening",
+        "Is anyone there?",
+        "Hi chatbot",
+        "Hello assistant"
+      ],
+      "response_type": "static",
+      "responses": [
+        "Hello! How can I assist you today?",
+        "Hi there! What can I help you with?",
+        "Welcome! I'm here to assist you with digital identity and complaints.",
+        "Greetings! How may I support you today?"
+      ]
+    },
+
+    {
+      "tag": "goodbye",
+      "description": "Handles user exit messages and ends the conversation politely.",
+      "patterns": [
+        "Bye",
+        "Goodbye",
+        "See you",
+        "Talk later",
+        "Exit",
+        "Close chat",
+        "Thank you bye",
+        "Catch you later"
+      ],
+      "response_type": "static",
+      "responses": [
+        "Goodbye! Have a great day.",
+        "See you soon!",
+        "Thank you for using our service.",
+        "Feel free to return anytime!"
+      ]
+    },
+
+    {
+      "tag": "help",
+      "description": "Provides information about available services and guides the user on how the system can assist.",
+      "patterns": [
+        "Help",
+        "What can you do?",
+        "How can you help me?",
+        "Show options",
+        "Available services",
+        "What services do you provide?",
+        "Guide me",
+        "Support options"
+      ],
+      "response_type": "static",
+      "responses": [
+        "I can help you with digital identity creation, document verification, complaint registration, and tracking.",
+        "You can ask me about uploading documents, checking complaint status, or understanding your trust score.",
+        "I provide assistance with e-governance services and grievance redressal."
+      ]
+    },
+
+    {
+      "tag": "create_digital_identity",
+      "description": "Guides users through the process of creating a new digital identity (DID).",
+      "patterns": [
+        "How do I create digital identity?",
+        "Create my digital ID",
+        "Register digital identity",
+        "How to get DID?",
+        "Open new digital account",
+        "Start digital identity process",
+        "Sign up for digital ID",
+        "Create government ID online"
+      ],
+      "response_type": "static",
+      "responses": [
+        "To create your digital identity, register using your email and upload required documents.",
+        "Sign up in the app and complete document verification to generate your Digital ID.",
+        "Your Digital ID will be generated after successful document verification."
+      ]
+    },
+
+    {
+      "tag": "required_documents",
+      "description": "Provides information about accepted documents for identity verification.",
+      "patterns": [
+        "What documents are required?",
+        "Documents needed for verification",
+        "Which documents should I upload?",
+        "Required ID proof?",
+        "ID proof list",
+        "Accepted documents",
+        "Valid identity documents",
+        "Verification document requirements"
+      ],
+      "response_type": "static",
+      "responses": [
+        "You may upload Aadhaar, PAN, Passport, or Driving License.",
+        "Government-issued ID proofs such as Aadhaar or Passport are accepted.",
+        "Ensure your document is valid and clearly visible."
+      ]
+    },
+
+    {
+      "tag": "upload_document",
+      "description": "Explains how users can upload documents for AI-based verification.",
+      "patterns": [
+        "How to upload document?",
+        "Upload my document",
+        "Submit ID proof",
+        "Where to upload documents?",
+        "Add new document",
+        "Document submission process",
+        "Attach ID proof",
+        "Upload verification file"
+      ],
+      "response_type": "static",
+      "responses": [
+        "Go to the Documents section and click Upload.",
+        "You can upload documents from your dashboard under Document Management.",
+        "Ensure the file is in PDF, JPG, or PNG format before uploading."
+      ]
+    },
+
+    {
+      "tag": "check_document_status",
+      "description": "Allows users to check the verification status of uploaded documents.",
+      "patterns": [
+        "Check document status",
+        "Is my document verified?",
+        "Verification status of my ID",
+        "Document approval status",
+        "Has my ID been verified?",
+        "Track document verification",
+        "See document result",
+        "Verification update"
+      ],
+      "response_type": "dynamic",
+      "responses": [
+        "Please provide your document reference ID.",
+        "Kindly share your document ID to check the status.",
+        "I can check that for you. What is your document number?"
+      ]
+    },
+
+    {
+      "tag": "document_rejected_reason",
+      "description": "Provides possible reasons for document rejection and guidance for resubmission.",
+      "patterns": [
+        "Why was my document rejected?",
+        "Document rejected reason",
+        "Verification failed why?",
+        "Reason for rejection",
+        "Why not approved?",
+        "Rejected ID issue",
+        "Document problem",
+        "Fix document rejection"
+      ],
+      "response_type": "dynamic",
+      "responses": [
+        "Your document may have been rejected due to unclear image or mismatched information.",
+        "Rejections typically occur due to invalid or expired documents.",
+        "Please ensure the document is clear and fully visible before resubmitting."
+      ]
+    },
+
+    {
+      "tag": "trust_score_query",
+      "description": "Explains how the AI-generated trust score works and how it is calculated.",
+      "patterns": [
+        "What is my trust score?",
+        "Explain trust score",
+        "Trust score meaning",
+        "How is trust calculated?",
+        "Why is my score low?",
+        "Increase trust score",
+        "Trust rating details",
+        "Check reliability score"
+      ],
+      "response_type": "static",
+      "responses": [
+        "Your trust score is calculated based on document authenticity and verification success.",
+        "Higher trust scores indicate verified and consistent identity records.",
+        "You can improve your score by uploading valid and clear documents."
+      ]
+    },
+
+    {
+      "tag": "register_complaint",
+      "description": "Initiates the complaint registration flow and collects department details.",
+      "patterns": [
+        "I want to file complaint",
+        "Register a complaint",
+        "Submit grievance",
+        "File issue",
+        "Report a problem",
+        "Raise complaint",
+        "Complain about service",
+        "Submit public complaint"
+      ],
+      "response_type": "flow",
+      "responses": [
+        "Sure. Please select the department related to your complaint.",
+        "I will assist you in filing a complaint. Which department is it about?",
+        "Please provide the department and issue details."
+      ]
+    },
+
+    {
+      "tag": "complaint_status",
+      "description": "Allows users to track the current status of a submitted complaint.",
+      "patterns": [
+        "Check complaint status",
+        "Track my complaint",
+        "Complaint status",
+        "Status of complaint ID",
+        "Complaint update",
+        "Track grievance",
+        "Is my complaint resolved?",
+        "See complaint progress"
+      ],
+      "response_type": "dynamic",
+      "responses": [
+        "Please share your complaint ID.",
+        "Kindly provide your complaint reference number.",
+        "I can check the status for you. What is the complaint ID?"
+      ]
+    },
+
+    {
+      "tag": "complaint_escalation",
+      "description": "Handles requests to escalate complaints or increase priority.",
+      "patterns": [
+        "Escalate my complaint",
+        "Raise complaint priority",
+        "Complaint not resolved",
+        "Speed up complaint",
+        "High priority complaint",
+        "Urgent complaint",
+        "Complaint delay",
+        "Complaint escalation request"
+      ],
+      "response_type": "flow",
+      "responses": [
+        "Please provide your complaint ID to escalate.",
+        "I can help escalate the issue. Share the complaint reference.",
+        "Your request will be reviewed for priority reassessment."
+      ]
+    },
+
+    {
+      "tag": "reset_password",
+      "description": "Guides users through password reset and account recovery process.",
+      "patterns": [
+        "Forgot password",
+        "Reset my password",
+        "Password recovery",
+        "Change password",
+        "I can't login",
+        "Login issue",
+        "Recover account",
+        "Reset login details"
+      ],
+      "response_type": "flow",
+      "responses": [
+        "Please enter your registered email to receive a reset link.",
+        "A password reset link will be sent to your email.",
+        "Follow the instructions sent to your email to reset your password."
+      ]
+    },
+
+    {
+      "tag": "privacy_policy_query",
+      "description": "Provides information about data protection, encryption, and privacy policies.",
+      "patterns": [
+        "Is my data safe?",
+        "Privacy policy",
+        "How is my data protected?",
+        "Data security",
+        "Information safety",
+        "Is my identity secure?",
+        "Encryption details",
+        "Security policy"
+      ],
+      "response_type": "static",
+      "responses": [
+        "Your data is encrypted and securely stored on protected servers.",
+        "We use secure authentication and encryption to protect user information.",
+        "All sensitive information is safeguarded using industry-standard security measures."
+      ]
+    },
+
+    {
+      "tag": "notification_settings",
+      "description": "Allows users to manage notification and alert preferences.",
+      "patterns": [
+        "Enable notifications",
+        "Disable alerts",
+        "Notification settings",
+        "Turn off notifications",
+        "Turn on alerts",
+        "Manage notifications",
+        "Alert preferences",
+        "Update notification settings"
+      ],
+      "response_type": "flow",
+      "responses": [
+        "You can manage notification preferences from your profile settings.",
+        "Go to Settings > Notifications to update your alert preferences.",
+        "Would you like to enable or disable alerts?"
+      ]
+    },
+
+    {
+      "tag": "fallback",
+      "description": "Handles unrecognized inputs and asks the user to clarify their request.",
+      "patterns": [],
+      "response_type": "fallback",
+      "responses": [
+        "I'm sorry, I didn't understand that. Could you rephrase?",
+        "I’m not sure about that. Can you provide more details?",
+        "Please clarify your request so I can assist you better."
+      ]
+    }
+
+  ]
+}
