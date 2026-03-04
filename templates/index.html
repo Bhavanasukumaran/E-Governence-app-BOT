@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Governance Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e5ddd5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 500px;
+            height: 100vh;
+            max-height: 900px;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .chat-header {
+            background: #7a7ad8;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            background-color: #efeae2;
+        }
+
+        .message-row {
+            display: flex;
+            flex-direction: column;
+            margin: 6px 0;
+        }
+
+        .message-row.user {
+            align-items: flex-end;
+        }
+
+        .message-row.bot {
+            align-items: flex-start;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 10px 14px;
+            border-radius: 16px;
+            font-size: 14px;
+            word-break: break-word;
+        }
+
+        .user .message {
+            background-color: #6be6ff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .bot .message {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-bottom-left-radius: 4px;
+        }
+
+        .timestamp {
+            font-size: 10px;
+            color: gray;
+            margin-top: 4px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background: #f0f0f0;
+            gap: 8px;
+        }
+
+        textarea {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+            resize: none;
+            font-size: 14px;
+            min-height: 40px;
+            max-height: 120px;
+        }
+
+        button {
+            padding: 10px 16px;
+            border-radius: 20px;
+            border: none;
+            background: #7a7ad8;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #7a7ad8;
+        }
+
+        .typing {
+            font-size: 12px;
+            color: gray;
+            font-style: italic;
+            margin: 4px 0;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(5px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 600px) {
+            .chat-container {
+                border-radius: 0;
+                height: 100vh;
+            }
+
+            .message {
+                max-width: 85%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="chat-header">
+        E-Governance Assistant
+    </div>
+
+    <div class="chat-box" id="chatBox"></div>
+
+    <div class="chat-input">
+        <textarea id="userInput" placeholder="Type a message..."></textarea>
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+const inputField = document.getElementById("userInput");
+const chatBox = document.getElementById("chatBox");
+
+inputField.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+});
+
+async function sendMessage() {
+    const message = inputField.value.trim();
+    if (!message) return;
+
+    addMessage(message, "user");
+    inputField.value = "";
+
+    showTypingIndicator();
+
+    const response = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: message })
+    });
+
+    const data = await response.json();
+
+    removeTypingIndicator();
+    addMessage(data.bot_response, "bot");
+}
+
+function addMessage(text, sender) {
+    const row = document.createElement("div");
+    row.classList.add("message-row", sender);
+
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+    messageDiv.innerText = text;
+
+    const time = document.createElement("div");
+    time.classList.add("timestamp");
+    time.innerText = getCurrentTime();
+
+    row.appendChild(messageDiv);
+    row.appendChild(time);
+
+    chatBox.appendChild(row);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function getCurrentTime() {
+    const now = new Date();
+    return now.getHours().toString().padStart(2,'0') + ":" +
+           now.getMinutes().toString().padStart(2,'0');
+}
+
+function showTypingIndicator() {
+    const typing = document.createElement("div");
+    typing.id = "typing";
+    typing.classList.add("typing");
+    typing.innerText = "Bot is typing...";
+    chatBox.appendChild(typing);
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function removeTypingIndicator() {
+    const typing = document.getElementById("typing");
+    if (typing) typing.remove();
+}
+
+window.onload = function() {
+    addMessage("👋 Hello! Welcome to the E-Governance Assistant. How can I help you today?", "bot");
+};
+</script>
+
+</body>
+</html>
