@@ -1,27 +1,14 @@
-import uuid
 from datetime import datetime
 from src.databases.database import get_connection
 from src.util.id_generator import generate_complaint_id
 
 
-def generate_complaint_id():
-    return "GOV-" + str(uuid.uuid4())[:6].upper()
-
-
-def predict_complaint_priority(text: str):
+def predict_complaint_priority(text):
 
     text = text.lower()
 
-    high_keywords = [
-        "urgent", "immediately", "emergency",
-        "fraud", "danger", "critical",
-        "fire", "accident"
-    ]
-
-    medium_keywords = [
-        "delay", "not working", "problem",
-        "issue", "slow", "damage", "broken"
-    ]
+    high_keywords = ["urgent", "danger", "critical", "emergency"]
+    medium_keywords = ["delay", "problem", "issue", "not working"]
 
     for word in high_keywords:
         if word in text:
@@ -34,24 +21,24 @@ def predict_complaint_priority(text: str):
     return "Low"
 
 
-def register_complaint(description, location="Not Provided", department="General"):
+def register_complaint(description, location):
 
     complaint_id = generate_complaint_id()
     priority = predict_complaint_priority(description)
     created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-    complaint_id = generate_complaint_id()
 
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute("""
     INSERT INTO complaints
+    (complaint_id, description, location, department, priority, status, created_at)
     VALUES (?, ?, ?, ?, ?, ?, ?)
     """, (
         complaint_id,
         description,
         location,
-        department,
+        "General",
         priority,
         "Pending",
         created_at
@@ -69,12 +56,15 @@ def get_complaint_status(complaint_id):
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT * FROM complaints WHERE complaint_id=?",
+        "SELECT status FROM complaints WHERE complaint_id=?",
         (complaint_id,)
     )
 
-    complaint = cursor.fetchone()
+    result = cursor.fetchone()
 
     conn.close()
 
-    return complaint
+    if result:
+        return result[0]
+    else:
+        return "Complaint ID not found"

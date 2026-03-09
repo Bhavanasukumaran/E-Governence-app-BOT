@@ -26,6 +26,15 @@ def init_db():
         created_at TEXT
     )
     """)
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS documents (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        document_id TEXT UNIQUE,
+        owner_name TEXT,
+        document_type TEXT,
+        status TEXT
+    )
+    """)
 
     conn.commit()
     conn.close()

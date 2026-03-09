@@ -1,21 +1,15 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from fastapi import Request
 from pydantic import BaseModel
 import json
 import random
 import os
-
 from src.databases.database import init_db
-from src.services.complaint_service import (
-    get_complaint_status,
-    register_complaint,
-    predict_complaint_priority
-)
-
-from src.services.intent_classifier import predict_intent
+from src.services.complaint_service import get_complaint_status, register_complaint, predict_complaint_priority
+from src.services.intent_classifier import get_ai_response
 from src.services.document_service import verify_document
-
 
 app = FastAPI(title="E-Governance AI Chatbot")
 
@@ -23,10 +17,6 @@ init_db()
 
 templates = Jinja2Templates(directory="templates")
 
-
-# -----------------------------
-# LOAD INTENTS
-# -----------------------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INTENTS_PATH = os.path.join(BASE_DIR, "src", "intents", "intents.json")
 
@@ -39,63 +29,32 @@ class ChatRequest(BaseModel):
     message: str
 
 
-# -----------------------------
-# CONVERSATION MEMORY
-# -----------------------------
+# Conversation state
 conversation_state = {}
 complaint_data = {}
 
 
-# -----------------------------
-# INTENT RESPONSE HELPER
-# -----------------------------
-def get_intent_response(tag):
+def find_response(user_message: str):
+    user_message = user_message.lower()
 
     for intent in intents:
-        if intent["tag"] == tag:
-            return random.choice(intent["responses"])
+        for pattern in intent["patterns"]:
+            if pattern.lower() in user_message:
+                return random.choice(intent["responses"])
 
-    return "I'm not sure how to help with that."
+    return "Sorry, I didn't understand that. Please rephrase your question."
 
-
-# -----------------------------
-# HOME PAGE
-# -----------------------------
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
-# -----------------------------
-# CHAT API
-# -----------------------------
 @app.post("/chat")
 def chat(request: ChatRequest):
 
     user_message = request.message.lower()
+    intent = get_ai_response(user_message)
 
-    if conversation_state.get("step") == "document_id":
-
-        doc_id = request.message.strip().upper()
-
-        result = verify_document(doc_id)
-
-        conversation_state.clear()
-
-        return {
-            "bot_response": result
-        }
-
-    # NLP intent detection
-    intent = predict_intent(user_message)
-
-    if intent is None:
-        intent = "fallback"
-
-
-    # -----------------------------
-    # DOCUMENT VERIFICATION
-    # -----------------------------
     if intent == "document_verification":
 
         conversation_state["step"] = "document_id"
@@ -104,6 +63,14 @@ def chat(request: ChatRequest):
             "bot_response": "Please provide your document reference ID."
         }
 
+    if "check status" in user_message or "complaint status" in user_message:
+
+        conversation_state["step"] = "status_id"
+
+        return {
+            "bot_response": "Please enter your complaint ID."
+        }
+    
     if conversation_state.get("step") == "document_id":
 
         doc_id = request.message.strip().upper()
@@ -114,18 +81,6 @@ def chat(request: ChatRequest):
 
         return {
             "bot_response": result
-        }
-
-
-    # -----------------------------
-    # COMPLAINT STATUS
-    # -----------------------------
-    if intent == "complaint_status":
-
-        conversation_state["step"] = "status_id"
-
-        return {
-            "bot_response": "Please enter your complaint ID."
         }
 
     if conversation_state.get("step") == "status_id":
@@ -135,17 +90,18 @@ def chat(request: ChatRequest):
         conversation_state.clear()
 
         status = get_complaint_status(complaint_id)
-
         return {
-            "bot_response": f"Complaint Status\nID: {complaint_id}\nCurrent Status: {status}"
+        "bot_response": f"Complaint Status\nID: {complaint_id}\nCurrent Status: {status}"
         }
 
-
-    # -----------------------------
-    # REGISTER COMPLAINT
-    # -----------------------------
-    if intent == "register_complaint":
-
+    if any(word in user_message for word in [
+        "file complaint",
+        "file a complaint",
+        "register complaint",
+        "report issue",
+        "report problem",
+        "submit complaint"
+        ]):
         conversation_state["step"] = "description"
 
         return {
@@ -177,19 +133,11 @@ def chat(request: ChatRequest):
             "bot_response": f"Complaint registered successfully.\nComplaint ID: {complaint_id}\nPriority Level: {priority}"
         }
 
-
-    # -----------------------------
-    # ISSUE PRIORITY DETECTION
-    # -----------------------------
+    # Existing complaint keyword detection
     issue_keywords = [
-        "urgent",
-        "delay",
-        "not working",
-        "problem",
-        "issue",
-        "fraud",
-        "emergency",
-        "critical"
+        "urgent", "delay", "not working",
+        "problem", "issue", "fraud",
+        "emergency", "critical"
     ]
 
     if any(word in user_message for word in issue_keywords):
@@ -197,16 +145,29 @@ def chat(request: ChatRequest):
         priority = predict_complaint_priority(user_message)
 
         return {
-            "bot_response": f"This issue seems {priority} priority. You may register a complaint if required."
+            "user_message": request.message,
+            "bot_response": f"Your complaint has been registered and marked as {priority} priority.",
+            "predicted_priority": priority
+        }
+    if conversation_state.get("step") == "document_id":
+
+        doc_id = request.message.strip().upper()
+
+        conversation_state.clear()
+
+        # Fake verification logic for now
+        if doc_id.startswith("DOC"):
+            status = "Verified ✅"
+        else:
+            status = "Invalid Document ID ❌"
+
+        return {
+            "bot_response": f"Document Verification Result:\nDocument ID: {doc_id}\nStatus: {status}"
         }
 
-
-    # -----------------------------
-    # NORMAL CHAT RESPONSE
-    # -----------------------------
-    response_text = get_intent_response(intent)
-
+    # Normal chatbot response
+    ai_response = get_ai_response(request.message)
     return {
         "user_message": request.message,
-        "bot_response": response_text
+        "bot_response": ai_response
     }
