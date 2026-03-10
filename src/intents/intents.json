@@ -6,6 +6,9 @@
       "description": "Handles general greetings and initiates friendly conversation with the user.",
       "patterns": [
         "Hi",
+        "Hiii",
+        "Helloo",
+        "halo",
         "Hello",
         "Hey",
         "Good morning",
@@ -62,7 +65,7 @@
       "responses": [
         "I can help you with digital identity creation, document verification, complaint registration, and tracking.",
         "You can ask me about uploading documents, checking complaint status, or understanding your trust score.",
-        "I provide assistance with e-governance services and grievance redressal."
+        "Feel free to ask about any service related to digital identity or complaints."
       ]
     },
 
@@ -126,27 +129,6 @@
         "Go to the Documents section and click Upload.",
         "You can upload documents from your dashboard under Document Management.",
         "Ensure the file is in PDF, JPG, or PNG format before uploading."
-      ]
-    },
-
-    {
-      "tag": "check_document_status",
-      "description": "Allows users to check the verification status of uploaded documents.",
-      "patterns": [
-        "Check document status",
-        "Is my document verified?",
-        "Verification status of my ID",
-        "Document approval status",
-        "Has my ID been verified?",
-        "Track document verification",
-        "See document result",
-        "Verification update"
-      ],
-      "response_type": "dynamic",
-      "responses": [
-        "Please provide your document reference ID.",
-        "Kindly share your document ID to check the status.",
-        "I can check that for you. What is your document number?"
       ]
     },
 
@@ -400,42 +382,6 @@
     },
 
     {
-        "tag": "view_profile",
-        "description": "Allows users to view their registered profile details.",
-        "patterns": [
-        "Show my profile",
-        "View my profile",
-        "My account details",
-        "Show my information",
-        "Display profile"
-        ],
-        "response_type": "dynamic",
-        "responses": [
-        "Fetching your profile details.",
-        "Here are your registered account details.",
-        "Retrieving your profile information now."
-        ]
-    },
-
-    {
-        "tag": "update_profile",
-        "description": "Allows users to update personal information such as phone number or address.",
-        "patterns": [
-        "Update my profile",
-        "Change my phone number",
-        "Edit my details",
-        "Modify account information",
-        "Update address"
-        ],
-        "response_type": "flow",
-        "responses": [
-        "Please specify which detail you would like to update.",
-        "You can update your contact information from profile settings.",
-        "Tell me what information needs to be changed."
-        ]
-    },
-
-    {
         "tag": "main_menu",
         "description": "Navigates the user back to the main dashboard or home screen.",
         "patterns": [
@@ -652,6 +598,20 @@
             "Please share your complaint ID.",
             "Kindly provide your complaint reference number."
         ]
+    },
+    {
+      "tag": "document_verification",
+      "patterns": [
+        "verify document",
+        "check document",
+        "document verification",
+        "check my certificate",
+        "verify certificate",
+        "check document status"
+      ],
+      "responses": [
+        "Please provide your document reference ID."
+      ]
     },
 
     {

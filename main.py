@@ -5,7 +5,6 @@ from pydantic import BaseModel
 import json
 import random
 import os
-
 from src.databases.database import init_db
 from src.services.complaint_service import (
     get_complaint_status,
@@ -74,36 +73,11 @@ def chat(request: ChatRequest):
 
     user_message = request.message.lower()
 
-    if conversation_state.get("step") == "document_id":
-
-        doc_id = request.message.strip().upper()
-
-        result = verify_document(doc_id)
-
-        conversation_state.clear()
-
-        return {
-            "bot_response": result
-        }
-
-    # NLP intent detection
-    intent = predict_intent(user_message)
-
-    if intent is None:
-        intent = "fallback"
-
-
     # -----------------------------
-    # DOCUMENT VERIFICATION
+    # STEP HANDLING FIRST
     # -----------------------------
-    if intent == "document_verification":
 
-        conversation_state["step"] = "document_id"
-
-        return {
-            "bot_response": "Please provide your document reference ID."
-        }
-
+    # DOCUMENT VERIFICATION STEP
     if conversation_state.get("step") == "document_id":
 
         doc_id = request.message.strip().upper()
@@ -117,17 +91,7 @@ def chat(request: ChatRequest):
         }
 
 
-    # -----------------------------
-    # COMPLAINT STATUS
-    # -----------------------------
-    if intent == "complaint_status":
-
-        conversation_state["step"] = "status_id"
-
-        return {
-            "bot_response": "Please enter your complaint ID."
-        }
-
+    # COMPLAINT STATUS STEP
     if conversation_state.get("step") == "status_id":
 
         complaint_id = request.message.strip().upper()
@@ -141,17 +105,7 @@ def chat(request: ChatRequest):
         }
 
 
-    # -----------------------------
-    # REGISTER COMPLAINT
-    # -----------------------------
-    if intent == "register_complaint":
-
-        conversation_state["step"] = "description"
-
-        return {
-            "bot_response": "Please describe your complaint."
-        }
-
+    # COMPLAINT DESCRIPTION STEP
     if conversation_state.get("step") == "description":
 
         complaint_data["description"] = request.message
@@ -161,6 +115,8 @@ def chat(request: ChatRequest):
             "bot_response": "Please enter the location of the issue."
         }
 
+
+    # COMPLAINT LOCATION STEP
     if conversation_state.get("step") == "location":
 
         complaint_data["location"] = request.message
@@ -175,6 +131,51 @@ def chat(request: ChatRequest):
 
         return {
             "bot_response": f"Complaint registered successfully.\nComplaint ID: {complaint_id}\nPriority Level: {priority}"
+        }
+
+
+    # -----------------------------
+    # INTENT DETECTION AFTER STATE
+    # -----------------------------
+    intent = predict_intent(user_message)
+
+    if intent is None:
+        intent = "fallback"
+
+
+    # -----------------------------
+    # DOCUMENT VERIFICATION INTENT
+    # -----------------------------
+    if intent == "document_verification":
+
+        conversation_state["step"] = "document_id"
+
+        return {
+            "bot_response": "Please provide your document reference ID."
+        }
+
+
+    # -----------------------------
+    # COMPLAINT STATUS INTENT
+    # -----------------------------
+    if intent == "complaint_status":
+
+        conversation_state["step"] = "status_id"
+
+        return {
+            "bot_response": "Please enter your complaint ID."
+        }
+
+
+    # -----------------------------
+    # REGISTER COMPLAINT INTENT
+    # -----------------------------
+    if intent == "register_complaint":
+
+        conversation_state["step"] = "description"
+
+        return {
+            "bot_response": "Please describe your complaint."
         }
 
 

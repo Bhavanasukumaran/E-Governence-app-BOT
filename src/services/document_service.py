@@ -2,7 +2,7 @@ import sqlite3
 
 def verify_document(document_id):
 
-    conn = sqlite3.connect("egov.db")
+    conn = sqlite3.connect("complaints.db")
     cursor = conn.cursor()
 
     cursor.execute(
